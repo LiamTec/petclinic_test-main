@@ -22,22 +22,22 @@ public class OwnersServiceImpl implements OwnersService {
 
     /**
      *
-     * @param owner
+     * @param owners
      * @return
      */
     @Override
-    public Owners create(Owners owner) {
-        return ownersRepository.save(owner);
+    public Owners create(Owners owners) {
+        return ownersRepository.save(owners);
     }
 
     /**
      *
-     * @param owner
+     * @param owners
      * @return
      */
     @Override
-    public Owners update(Owners owner) {
-        return ownersRepository.save(owner);
+    public Owners update(Owners owners) {
+        return ownersRepository.save(owners);
     }
 
     /**
@@ -47,23 +47,22 @@ public class OwnersServiceImpl implements OwnersService {
      */
     @Override
     public void delete(Integer id) throws OwnersNotFoundException {
-        Owners owner = findById(id);
-        ownersRepository.delete(owner);
+        Owners owners = findById(id);
+        ownersRepository.delete(owners);
     }
 
     /**
      *
      * @param id
      * @return
+     * @throws OwnersNotFoundException
      */
     @Override
     public Owners findById(Integer id) throws OwnersNotFoundException {
-        Optional<Owners> owner = ownersRepository.findById(id);
-
-        if (!owner.isPresent())
-            throw new OwnersNotFoundException("Owner record not found...!");
-
-        return owner.get();
+        Optional<Owners> owners = ownersRepository.findById(id);
+        if (!owners.isPresent())
+            throw new OwnersNotFoundException("Record not found...!");
+        return owners.get();
     }
 
     /**
@@ -73,8 +72,8 @@ public class OwnersServiceImpl implements OwnersService {
      */
     @Override
     public List<Owners> findByName(String name) {
-        List<Owners> owners = ownersRepository.findByName(name);
-        owners.forEach(owner -> log.info("" + owner));
+        List<Owners> owners = ownersRepository.findByFirstName(name);
+        owners.forEach(owner -> log.info(" " + owner));
         return owners;
     }
 
