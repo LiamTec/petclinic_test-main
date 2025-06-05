@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.util.List;
 import java.util.Optional;
 
+import com.tecsup.petclinic.util.TObjectCreator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,7 +19,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.tecsup.petclinic.entities.Pet;
 import com.tecsup.petclinic.exceptions.PetNotFoundException;
 import com.tecsup.petclinic.repositories.PetRepository;
-import com.tecsup.petclinic.util.TObjectCreator;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -85,7 +85,7 @@ public class PetServiceMockitoTest {
 
         int TYPE_ID = 5;
 
-        List<Pet> petsExpected = TObjectCreator.getPetsForFindByTypeId();
+        List<Pet> petsExpected = com.tecsup.petclinic.util.TObjectCreator.getPetsForFindByTypeId();
 
         Mockito.when(this.repository.findByTypeId(TYPE_ID))
                 .thenReturn(petsExpected);
@@ -103,7 +103,7 @@ public class PetServiceMockitoTest {
 
         int OWNER_ID = 10;
 
-        List<Pet> petsExpected = TObjectCreator.getPetsForFindByOwnerId();
+        List<Pet> petsExpected = com.tecsup.petclinic.util.TObjectCreator.getPetsForFindByOwnerId();
 
         Mockito.when(this.repository.findByOwnerId(OWNER_ID))
                 .thenReturn(petsExpected);
@@ -124,8 +124,8 @@ public class PetServiceMockitoTest {
     @Test
     public void testCreatePet() {
 
-        Pet newPet = TObjectCreator.newPet();
-        Pet newCreatePet = TObjectCreator.newPetCreated();
+        Pet newPet = com.tecsup.petclinic.util.TObjectCreator.newPet();
+        Pet newCreatePet = com.tecsup.petclinic.util.TObjectCreator.newPetCreated();
 
         Mockito.when(this.repository.save(newPet))
                 .thenReturn(newCreatePet);
@@ -152,8 +152,8 @@ public class PetServiceMockitoTest {
         int UP_OWNER_ID = 2;
         int UP_TYPE_ID = 2;
 
-        Pet newPet = TObjectCreator.newPetForUpdate();
-        Pet newPetCreate = TObjectCreator.newPetCreatedForUpdate();
+        Pet newPet = com.tecsup.petclinic.util.TObjectCreator.newPetForUpdate();
+        Pet newPetCreate = com.tecsup.petclinic.util.TObjectCreator.newPetCreatedForUpdate();
 
         // ------------ Create ---------------
 
@@ -192,8 +192,8 @@ public class PetServiceMockitoTest {
     @Test
     public void testDeletePet() {
 
-        Pet newPet = TObjectCreator.newPetForDelete();
-        Pet newPetCreate = TObjectCreator.newPetCreatedForDelete();
+        Pet newPet = com.tecsup.petclinic.util.TObjectCreator.newPetForDelete();
+        Pet newPetCreate = com.tecsup.petclinic.util.TObjectCreator.newPetCreatedForDelete();
 
         // ------------ Create ---------------
 

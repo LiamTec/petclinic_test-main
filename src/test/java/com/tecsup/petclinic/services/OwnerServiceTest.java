@@ -1,15 +1,15 @@
 package com.tecsup.petclinic.services;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
-import com.tecsup.petclinic.entities.Owners;
-import com.tecsup.petclinic.repositories.OwnersRepository;
-import com.tecsup.petclinic.util.OwnersObjectCreator;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import com.tecsup.petclinic.entities.Owner;
+import com.tecsup.petclinic.exceptions.OwnerNotFoundException;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,36 +18,29 @@ import lombok.extern.slf4j.Slf4j;
 public class OwnerServiceTest {
 
 	@Autowired
-	private OwnersService ownerService;
-
-	@Autowired
-	private OwnersRepository ownersRepository;
+	private OwnerService ownerService;
 
 	@Test
-	public void testCreateOwner() {
+	public void testFindOwnerById() {
+		Integer ID = 1;
+		String FIRST_NAME_EXPECTED = "George";
 
-		// Datos esperados
-		String FIRST_NAME = "Josue";
-		String LAST_NAME = "Mario";
-		String ADDRESS = "Bros";
-		String CITY = "Mushroom Kingdom";
-		String TELEPHONE = "123456789";
+		Owner owner = null;
+		try {
+			owner = ownerService.findById(ID);
+		} catch (OwnerNotFoundException e) {
+			fail(e.getMessage());
+		}
+		assertEquals(FIRST_NAME_EXPECTED, owner.getFirstName());
+	}
 
-		// Crear objeto Owners sin ID (nuevo)
-		Owners owner = OwnersObjectCreator.newOwner();
+	@Test
+	public void testFindOwnerByFirstName() {
+		String FIND_FIRST_NAME = "George";
+		int EXPECTED_SIZE = 1;
 
-		// Crear el owner en la base (servicio)
-		Owners ownerCreated = this.ownerService.create(owner);
+		List<Owner> owners = ownerService.findByFirstName(FIND_FIRST_NAME);
 
-		log.info("OWNER CREATED: " + ownerCreated.toString());
-
-		// Validaciones
-		assertNotNull(ownerCreated.getId());  // Se generó ID al guardar
-		assertEquals(FIRST_NAME, ownerCreated.getFirst_name());
-		assertEquals(LAST_NAME, ownerCreated.getLast_name());
-		assertEquals(ADDRESS, ownerCreated.getAddress());
-		assertEquals(CITY, ownerCreated.getCity());
-		assertEquals(TELEPHONE, ownerCreated.getTelephone());
-
+		assertEquals(EXPECTED_SIZE, owners.size());
 	}
 }
